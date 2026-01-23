@@ -37,30 +37,22 @@ const MainPage = () => {
   const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) || 1 : 1;
 
   // 인기 체험 API (most_reviewed 정렬)
-  const { data: popularActivitiesData } = useActivities({
+  const { data: popularActivitiesData, isLoading: isPopularLoadin } = useActivities({
     method: 'offset',
     page: 1,
     size: 10,
     sort: 'most_reviewed',
   });
 
-  // 배너용 전체 체험 API (랜덤 선택을 위해 더 많은 데이터 가져오기)
-  const { data: bannerActivitiesData, isLoading: isBannerLoading } = useActivities({
-    method: 'offset',
-    page: 1,
-    size: 20,
-    sort: 'latest',
-  });
-
   // 랜덤 배너 체험 선택 (배너 데이터가 변경될 때마다 랜덤 체험을 다시 선택)
   const randomBannerActivity = useMemo(() => {
-    const activities = bannerActivitiesData?.activities;
+    const activities = popularActivitiesData?.activities;
     if (!activities || activities.length === 0) {
       return null;
     }
     const randomIndex = Math.floor(Math.random() * activities.length);
     return activities[randomIndex];
-  }, [bannerActivitiesData?.activities]);
+  }, [popularActivitiesData?.activities]);
 
   // 모든 체험 API (카테고리 필터링 + 페이지네이션 + 정렬 + 검색)
   const { data: allActivitiesData, isLoading } = useActivities({
@@ -132,7 +124,7 @@ const MainPage = () => {
       <MainBanner
         bannerImageUrl={randomBannerActivity?.bannerImageUrl}
         bannerTitle={randomBannerActivity?.title}
-        isLoading={isBannerLoading}
+        isLoading={isPopularLoadin}
       />
 
       {/* 흰색 배경 영역 */}

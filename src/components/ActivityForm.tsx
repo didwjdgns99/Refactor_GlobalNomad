@@ -169,25 +169,25 @@ export default function ActivityForm({
     });
 
   //마운트 되자마자 상태
-  const makeSnapshotFromInitialData = (data: ActivityFormInitialData) =>
-    JSON.stringify({
-      title: data.title ?? '',
-      category: data.category ?? '',
-      text: data.description ?? '',
-      price: String(data.price ?? ''),
-      address: data.address ?? '',
-      rows: (data.rows ?? []).map((r) => ({
-        date: r.date ? r.date.toISOString().split('T')[0] : null,
-        startTime: r.startTime,
-        endTime: r.endTime,
-        serverTimeId: (r as any).serverTimeId ?? null,
-      })),
-      existingBannerUrl: data.bannerImageUrl ?? '',
-      existingSubImageUrls: data.subImageUrls ?? [],
-      removedSubImageIds: [], // 빈 배열 삭제되서 삭제 아이디가 담기면 변화 감지?
-      bannerCount: 0, //마운트 되자마자 사용자가 새로운 파일을 아직 첨부 안해서 0
-      introCount: 0,
-    });
+  // const makeSnapshotFromInitialData = (data: ActivityFormInitialData) =>
+  //   JSON.stringify({
+  //     title: data.title ?? '',
+  //     category: data.category ?? '',
+  //     text: data.description ?? '',
+  //     price: String(data.price ?? ''),
+  //     address: data.address ?? '',
+  //     rows: (data.rows ?? []).map((r) => ({
+  //       date: r.date ? r.date.toISOString().split('T')[0] : null,
+  //       startTime: r.startTime,
+  //       endTime: r.endTime,
+  //       serverTimeId: (r as any).serverTimeId ?? null,
+  //     })),
+  //     existingBannerUrl: data.bannerImageUrl ?? '',
+  //     existingSubImageUrls: data.subImageUrls ?? [],
+  //     removedSubImageIds: [], // 빈 배열 삭제되서 삭제 아이디가 담기면 변화 감지?
+  //     bannerCount: 0, //마운트 되자마자 사용자가 새로운 파일을 아직 첨부 안해서 0
+  //     introCount: 0,
+  //   });
 
   //등록페이지 에서 초기 기준점을 잡고 onDirtyChange를 false로 초기화
   useEffect(() => {
@@ -227,32 +227,32 @@ export default function ActivityForm({
     setIntroImages([]);
     setDraft(createDraft());
 
-    const snap = makeSnapshotFromInitialData(initialData);
-    setInitialSnapshot(snap);
+    // const snap = makeSnapshotFromInitialData(initialData);
+    // setInitialSnapshot(snap);
     onDirtyChange?.(false);
   }, [initialData]);
 
-  useEffect(() => {
-    if (!initialSnapshot) {
-      return;
-    }
-    const dirty = makeSnapshot() !== initialSnapshot;
-    onDirtyChange?.(dirty);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    initialSnapshot,
-    title,
-    category,
-    text,
-    price,
-    address,
-    rows,
-    existingBannerUrl,
-    existingSubImageUrls,
-    removedSubImageIds,
-    bannerImages.length,
-    introImages.length,
-  ]);
+  // useEffect(() => {
+  //   if (!initialSnapshot) {
+  //     return;
+  //   }
+  //   const dirty = makeSnapshot() !== initialSnapshot;
+  //   onDirtyChange?.(dirty);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [
+  //   initialSnapshot,
+  //   title,
+  //   category,
+  //   text,
+  //   price,
+  //   address,
+  //   rows,
+  //   existingBannerUrl,
+  //   existingSubImageUrls,
+  //   removedSubImageIds,
+  //   bannerImages.length,
+  //   introImages.length,
+  // ]);
 
   // 유효성
   const isFormValid = useMemo(() => {
