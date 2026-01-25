@@ -40,7 +40,7 @@ export const BaseInput = ({
   const baseClasses = [
     paddingLeft,
     paddingRight,
-    'w-full rounded-2xl border h-[54px] transition-all duration-200 outline-none focus:ring-2 focus:ring-opacity-50 placeholder:text-gray-400 font-lg-medium',
+    'w-full rounded-2xl border h-[54px] transition-all duration-200 outline-none focus:ring-2 focus:ring-opacity-50 placeholder:text-gray-400 font-lg-medium shadow-[0_0_8px_rgba(0,0,0,0.05)]',
     getStateClasses(),
     className,
   ]

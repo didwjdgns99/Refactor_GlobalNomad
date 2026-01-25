@@ -452,7 +452,7 @@ export default function ActivityForm({
         <div className='flex flex-col gap-2.5'>
           <Label className='font-lg-bold text-gray-950'>카테고리</Label>
 
-          <Dropdown className='relative w-full'>
+          <Dropdown className='relative w-full shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
             <DropdownTrigger className='flex w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2'>
               <span className={category ? 'text-gray-900' : 'text-gray-400'}>
                 {category || '카테고리를 선택해 주세요'}
@@ -481,6 +481,7 @@ export default function ActivityForm({
             onChange={onChangeText}
             variant='default'
             placeholder='설명을 최대 1000자 입니다.'
+            className='shadow-[0_0_8px_rgba(0,0,0,0.05)]'
           />
         </div>
 
@@ -540,12 +541,12 @@ export default function ActivityForm({
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>시작 시간</Label>
                 <Dropdown className='relative w-full'>
-                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2'>
+                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                     <span>{draft.startTime}</span>
                     <ArrowDown />
                   </DropdownTrigger>
 
-                  <DropdownList className='absolute top-full left-0 z-50 mt-2 max-h-40 w-full overflow-y-auto rounded-xl border border-gray-100 bg-white p-1 shadow-md'>
+                  <DropdownList className='absolute top-full left-0 z-50 mt-2 max-h-40 w-full overflow-y-auto rounded-xl border border-gray-100 bg-white p-1'>
                     {TIME_OPTIONS.map((time) => (
                       <DropdownItem
                         key={time}
@@ -563,7 +564,7 @@ export default function ActivityForm({
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>종료 시간</Label>
                 <Dropdown className='relative w-full'>
-                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2'>
+                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                     <span>{draft.endTime}</span>
                     <ArrowDown />
                   </DropdownTrigger>
@@ -601,7 +602,7 @@ export default function ActivityForm({
             <div className='flex items-end gap-3 sm:block'>
               <div className='flex-1'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>날짜</Label>
-                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-700'>
+                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-700 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                   {row.date.toLocaleDateString('ko-KR')}
                 </div>
               </div>
@@ -610,7 +611,7 @@ export default function ActivityForm({
             <div className='grid grid-cols-[1fr_auto_1fr_auto] items-end gap-2 sm:contents'>
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>시작 시간</Label>
-                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900'>
+                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                   {row.startTime}
                 </div>
               </div>
@@ -619,7 +620,7 @@ export default function ActivityForm({
 
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>종료 시간</Label>
-                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900'>
+                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                   {row.endTime}
                 </div>
               </div>

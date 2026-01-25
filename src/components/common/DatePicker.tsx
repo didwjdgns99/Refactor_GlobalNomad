@@ -47,7 +47,7 @@ function DateInput({ value }: { value?: Date }) {
 export function DatePicker({ value, onChange }: { value?: Date; onChange: (date: Date) => void }) {
   return (
     <Dropdown className='relative w-full lg:max-w-90'>
-      <DropdownTrigger className='w-full cursor-pointer'>
+      <DropdownTrigger className='w-full cursor-pointer shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
         <DateInput value={value} />
       </DropdownTrigger>
       <DropdownList className='absolute right-0 z-50 mt-2'>
