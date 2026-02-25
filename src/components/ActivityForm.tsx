@@ -169,25 +169,25 @@ export default function ActivityForm({
     });
 
   //마운트 되자마자 상태
-  const makeSnapshotFromInitialData = (data: ActivityFormInitialData) =>
-    JSON.stringify({
-      title: data.title ?? '',
-      category: data.category ?? '',
-      text: data.description ?? '',
-      price: String(data.price ?? ''),
-      address: data.address ?? '',
-      rows: (data.rows ?? []).map((r) => ({
-        date: r.date ? r.date.toISOString().split('T')[0] : null,
-        startTime: r.startTime,
-        endTime: r.endTime,
-        serverTimeId: (r as any).serverTimeId ?? null,
-      })),
-      existingBannerUrl: data.bannerImageUrl ?? '',
-      existingSubImageUrls: data.subImageUrls ?? [],
-      removedSubImageIds: [], // 빈 배열 삭제되서 삭제 아이디가 담기면 변화 감지?
-      bannerCount: 0, //마운트 되자마자 사용자가 새로운 파일을 아직 첨부 안해서 0
-      introCount: 0,
-    });
+  // const makeSnapshotFromInitialData = (data: ActivityFormInitialData) =>
+  //   JSON.stringify({
+  //     title: data.title ?? '',
+  //     category: data.category ?? '',
+  //     text: data.description ?? '',
+  //     price: String(data.price ?? ''),
+  //     address: data.address ?? '',
+  //     rows: (data.rows ?? []).map((r) => ({
+  //       date: r.date ? r.date.toISOString().split('T')[0] : null,
+  //       startTime: r.startTime,
+  //       endTime: r.endTime,
+  //       serverTimeId: (r as any).serverTimeId ?? null,
+  //     })),
+  //     existingBannerUrl: data.bannerImageUrl ?? '',
+  //     existingSubImageUrls: data.subImageUrls ?? [],
+  //     removedSubImageIds: [], // 빈 배열 삭제되서 삭제 아이디가 담기면 변화 감지?
+  //     bannerCount: 0, //마운트 되자마자 사용자가 새로운 파일을 아직 첨부 안해서 0
+  //     introCount: 0,
+  //   });
 
   //등록페이지 에서 초기 기준점을 잡고 onDirtyChange를 false로 초기화
   useEffect(() => {
@@ -227,32 +227,32 @@ export default function ActivityForm({
     setIntroImages([]);
     setDraft(createDraft());
 
-    const snap = makeSnapshotFromInitialData(initialData);
-    setInitialSnapshot(snap);
+    // const snap = makeSnapshotFromInitialData(initialData);
+    // setInitialSnapshot(snap);
     onDirtyChange?.(false);
   }, [initialData]);
 
-  useEffect(() => {
-    if (!initialSnapshot) {
-      return;
-    }
-    const dirty = makeSnapshot() !== initialSnapshot;
-    onDirtyChange?.(dirty);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    initialSnapshot,
-    title,
-    category,
-    text,
-    price,
-    address,
-    rows,
-    existingBannerUrl,
-    existingSubImageUrls,
-    removedSubImageIds,
-    bannerImages.length,
-    introImages.length,
-  ]);
+  // useEffect(() => {
+  //   if (!initialSnapshot) {
+  //     return;
+  //   }
+  //   const dirty = makeSnapshot() !== initialSnapshot;
+  //   onDirtyChange?.(dirty);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [
+  //   initialSnapshot,
+  //   title,
+  //   category,
+  //   text,
+  //   price,
+  //   address,
+  //   rows,
+  //   existingBannerUrl,
+  //   existingSubImageUrls,
+  //   removedSubImageIds,
+  //   bannerImages.length,
+  //   introImages.length,
+  // ]);
 
   // 유효성
   const isFormValid = useMemo(() => {
@@ -452,7 +452,7 @@ export default function ActivityForm({
         <div className='flex flex-col gap-2.5'>
           <Label className='font-lg-bold text-gray-950'>카테고리</Label>
 
-          <Dropdown className='relative w-full'>
+          <Dropdown className='relative w-full shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
             <DropdownTrigger className='flex w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2'>
               <span className={category ? 'text-gray-900' : 'text-gray-400'}>
                 {category || '카테고리를 선택해 주세요'}
@@ -481,6 +481,7 @@ export default function ActivityForm({
             onChange={onChangeText}
             variant='default'
             placeholder='설명을 최대 1000자 입니다.'
+            className='shadow-[0_0_8px_rgba(0,0,0,0.05)]'
           />
         </div>
 
@@ -540,12 +541,12 @@ export default function ActivityForm({
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>시작 시간</Label>
                 <Dropdown className='relative w-full'>
-                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2'>
+                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                     <span>{draft.startTime}</span>
                     <ArrowDown />
                   </DropdownTrigger>
 
-                  <DropdownList className='absolute top-full left-0 z-50 mt-2 max-h-40 w-full overflow-y-auto rounded-xl border border-gray-100 bg-white p-1 shadow-md'>
+                  <DropdownList className='absolute top-full left-0 z-50 mt-2 max-h-40 w-full overflow-y-auto rounded-xl border border-gray-100 bg-white p-1'>
                     {TIME_OPTIONS.map((time) => (
                       <DropdownItem
                         key={time}
@@ -563,7 +564,7 @@ export default function ActivityForm({
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>종료 시간</Label>
                 <Dropdown className='relative w-full'>
-                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2'>
+                  <DropdownTrigger className='flex h-13.5 w-full items-center justify-between rounded-xl border border-gray-100 bg-white px-3 py-2 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                     <span>{draft.endTime}</span>
                     <ArrowDown />
                   </DropdownTrigger>
@@ -601,7 +602,7 @@ export default function ActivityForm({
             <div className='flex items-end gap-3 sm:block'>
               <div className='flex-1'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>날짜</Label>
-                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-700'>
+                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-700 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                   {row.date.toLocaleDateString('ko-KR')}
                 </div>
               </div>
@@ -610,7 +611,7 @@ export default function ActivityForm({
             <div className='grid grid-cols-[1fr_auto_1fr_auto] items-end gap-2 sm:contents'>
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>시작 시간</Label>
-                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900'>
+                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                   {row.startTime}
                 </div>
               </div>
@@ -619,7 +620,7 @@ export default function ActivityForm({
 
               <div className='w-full sm:w-40'>
                 <Label className='font-lg-medium text-gray-950 sm:hidden'>종료 시간</Label>
-                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900'>
+                <div className='flex h-13.5 items-center rounded-xl border border-gray-100 bg-white px-3 py-2 text-gray-900 shadow-[0_0_8px_rgba(0,0,0,0.05)]'>
                   {row.endTime}
                 </div>
               </div>

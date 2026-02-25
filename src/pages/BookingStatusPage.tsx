@@ -78,14 +78,11 @@ export default function BookingStatusPage({ setMobileOpen, mobileOpen }: Props) 
     setSelectBadge(dateYmd);
     setIsReservationModalOpen(true);
 
-    // ✅ 뱃지(또는 wrapper)의 화면 좌표
     const rect = anchorEl.getBoundingClientRect();
 
-    // ✅ 모달 대략 폭(너 모달 폭에 맞춰 조정)
     const MODAL_W = 360;
     const GAP = 8;
 
-    // ✅ 오른쪽 공간이 충분하면 오른쪽, 아니면 왼쪽
     const canPlaceRight = rect.right + GAP + MODAL_W <= window.innerWidth;
     const placement: 'right' | 'left' = canPlaceRight ? 'right' : 'left';
 
