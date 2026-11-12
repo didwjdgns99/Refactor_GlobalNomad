@@ -297,7 +297,7 @@ function ActivityDetailPage() {
           </div>
 
           {/* 우측 영역 - 예약 정보 (데스크톱) */}
-          <aside className='hidden lg:block lg:w-[384px]'>
+          <aside className='lg:block lg:w-[384px]'>
             <div className='sticky top-24'>
               {/* 상단 정보 영역 */}
               <ActivityInfo
