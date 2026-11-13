@@ -18,6 +18,7 @@ import type { ActivityCategory } from '@/apis/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import type { Address } from 'react-daum-postcode';
 import { useSnackBar } from '@/providers/SnackBarProvider';
+import formatLocalDate from '@/components/common/formatLocalDate';
 
 //import { normalizeDate } from '@/utils/normalizeDate';
 const MAX_BANNER = 1;
@@ -155,11 +156,11 @@ export default function ActivityForm({
       text,
       price,
       address,
-      rows: rows.map((r) => ({
-        date: r.date ? r.date.toISOString().split('T')[0] : null, //(YYYY-MM-DD) 만 비교 [날짜T,시간Z] 그 중 날짜만
-        startTime: r.startTime,
-        endTime: r.endTime,
-        serverTimeId: (r as any).serverTimeId ?? null, //수정페이지이면 서버에서 보내준 row아이디
+      rows: rows.map((row) => ({
+        date: row.date ? formatLocalDate(row.date) : null, //(YYYY-MM-DD) 만 비교 [날짜T,시간Z] 그 중 날짜만
+        startTime: row.startTime,
+        endTime: row.endTime,
+        serverTimeId: (row as any).serverTimeId ?? null, //수정페이지이면 서버에서 보내준 row아이디
       })),
       existingBannerUrl, //서버에서 보내준 기존 배너 url, 사진이 변경되면 url이 변경되서 변화 감지
       existingSubImageUrls, //서버에서 보내준 서브 url, 서브 url중 하나라도 바뀌면 변화 감지
@@ -167,27 +168,6 @@ export default function ActivityForm({
       bannerCount: bannerImages.length, // 배너이미지의 카운트 감지 0 > 1 , 1 > 0 기존과 갯수가 같으면 감지 못함
       introCount: introImages.length, // 서브이미지의 카운트 감지 기존 갯수와 같으면 감지 못함
     });
-
-  //마운트 되자마자 상태
-  // const makeSnapshotFromInitialData = (data: ActivityFormInitialData) =>
-  //   JSON.stringify({
-  //     title: data.title ?? '',
-  //     category: data.category ?? '',
-  //     text: data.description ?? '',
-  //     price: String(data.price ?? ''),
-  //     address: data.address ?? '',
-  //     rows: (data.rows ?? []).map((r) => ({
-  //       date: r.date ? r.date.toISOString().split('T')[0] : null,
-  //       startTime: r.startTime,
-  //       endTime: r.endTime,
-  //       serverTimeId: (r as any).serverTimeId ?? null,
-  //     })),
-  //     existingBannerUrl: data.bannerImageUrl ?? '',
-  //     existingSubImageUrls: data.subImageUrls ?? [],
-  //     removedSubImageIds: [], // 빈 배열 삭제되서 삭제 아이디가 담기면 변화 감지?
-  //     bannerCount: 0, //마운트 되자마자 사용자가 새로운 파일을 아직 첨부 안해서 0
-  //     introCount: 0,
-  //   });
 
   //등록페이지 에서 초기 기준점을 잡고 onDirtyChange를 false로 초기화
   useEffect(() => {
@@ -203,8 +183,6 @@ export default function ActivityForm({
     const snap = makeSnapshot();
     setInitialSnapshot(snap);
     onDirtyChange?.(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   // 수정모드: 초기값 주입
@@ -227,32 +205,8 @@ export default function ActivityForm({
     setIntroImages([]);
     setDraft(createDraft());
 
-    // const snap = makeSnapshotFromInitialData(initialData);
-    // setInitialSnapshot(snap);
     onDirtyChange?.(false);
   }, [initialData]);
-
-  // useEffect(() => {
-  //   if (!initialSnapshot) {
-  //     return;
-  //   }
-  //   const dirty = makeSnapshot() !== initialSnapshot;
-  //   onDirtyChange?.(dirty);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [
-  //   initialSnapshot,
-  //   title,
-  //   category,
-  //   text,
-  //   price,
-  //   address,
-  //   rows,
-  //   existingBannerUrl,
-  //   existingSubImageUrls,
-  //   removedSubImageIds,
-  //   bannerImages.length,
-  //   introImages.length,
-  // ]);
 
   // 유효성
   const isFormValid = useMemo(() => {
@@ -353,17 +307,16 @@ export default function ActivityForm({
   //    addScheduleFromDraft
 
   const addScheduleFromDraft = () => {
-    const toYmd = (d: Date) => d.toISOString().split('T')[0];
     // 1) 날짜 없으면 끝
     if (!draft.date) {
       return;
     }
 
-    const draftDateKey = toYmd(draft.date);
+    const draftDateKey = formatLocalDate(draft.date);
 
     // 2) rows의 date도 같은 포맷으로 비교
     const isDuplicate = rows.some((row) => {
-      const rowDateKey = toYmd(row.date);
+      const rowDateKey = formatLocalDate(row.date);
       return (
         rowDateKey === draftDateKey &&
         row.startTime === draft.startTime &&

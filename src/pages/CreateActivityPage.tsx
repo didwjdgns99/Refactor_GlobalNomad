@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useBlocker, useNavigate } from 'react-router-dom';
 import { isAxiosError } from 'axios';
 import { useSnackBar } from '@/providers/SnackBarProvider';
+import formatLocalDate from '@/components/common/formatLocalDate';
 
 export default function CreateActivityPage() {
   const { mutate, isPending } = useCreateActivity();
@@ -80,7 +81,7 @@ export default function CreateActivityPage() {
       //split('T')[0] 하면 "2026-01-02"만 뽑음
       // 서버가 원하는 날짜 형식 완성
       const schedules = values.rows.map((row) => ({
-        date: row.date.toISOString().split('T')[0],
+        date: formatLocalDate(row.date),
         startTime: row.startTime,
         endTime: row.endTime,
       }));
