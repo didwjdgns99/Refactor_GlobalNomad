@@ -10,6 +10,7 @@ import CancelReservationModal from '@/components/common/modal/CancelReservationM
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useParams, useBlocker } from 'react-router-dom';
 import { useSnackBar } from '@/providers/SnackBarProvider';
+import formatLocalDate from '@/components/common/formatLocalDate';
 export default function EditActivityPage() {
   const navigate = useNavigate();
   const { activityId } = useParams();
@@ -148,7 +149,7 @@ export default function EditActivityPage() {
       const originalIds = data.schedules.map((s) => s.id);
 
       const currentServerIds = values.rows
-        .map((r: any) => r.serverTimeId)
+        .map((row: any) => row.serverTimeId)
         .filter((v: any) => typeof v === 'number') as number[]; //number 만
 
       // 원래는 있었는데 지금은 없는 것들 = 삭제 대상
@@ -157,11 +158,11 @@ export default function EditActivityPage() {
 
       // 지금 rows 중 serverTimeId 없는 것들 = 새로 추가한 스케줄
       const schedulesToAdd = values.rows
-        .filter((r: any) => !r.serverTimeId)
-        .map((r) => ({
-          date: r.date.toISOString().split('T')[0],
-          startTime: r.startTime,
-          endTime: r.endTime,
+        .filter((row: any) => !row.serverTimeId)
+        .map((row) => ({
+          date: formatLocalDate(row.date),
+          startTime: row.startTime,
+          endTime: row.endTime,
         }));
 
       // 4) 최종 PATCH payload
